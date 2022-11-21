@@ -82,7 +82,9 @@ func Transformation(ifilename string, ofilename string) {
 
 	// the output string will always finish with \n\n, because WriteString adds a \n
 	// we want to remove one of the \n
-	output = output[:len(output)-1]
+	if len(output) > 0 {
+		output = output[:len(output)-1]
+	}
 
 	// =!!!= because maps are unordered, each run generates a random order for the groups =!!!=
 	_, ferror2 := foutput.WriteString(output)
