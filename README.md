@@ -11,7 +11,7 @@
 
 #### Format
 
-- The first line should have the first field "full_name". The field are lowercase, separated with comma and space
+- The first line should have the first field "full_name". The fields are lowercase, separated with comma and space
 - The next lines should start with with an uppercase letter
 - Duplicated lines can exist, but they will be ignored
 
