@@ -37,10 +37,10 @@ func TestTransofrmation(t *testing.T) {
 		panic("Output file not found or failed to open!")
 	}
 
-	// !!! because maps are unordered, each run generates a random order for the groups !!!
+	// =!!! because maps are unordered, each run generates a random order for the groups !!!=
 	// the test input has only 2 groups, so there are only 2 possibilites
-	expected1 := "A:\nAnita, anita@email.com, California\nAron, aron.bla@email.com, California\n\nC:\nCosmin, kox@bla.com, Giurgiu"
-	expected2 := "C:\nCosmin, kox@bla.com, Giurgiu\n\nA:\nAnita, anita@email.com, California\nAron, aron.bla@email.com, California"
+	expected1 := "A:\nAnita, anita@email.com, California\nAron, aron.bla@email.com, California\n\nC:\nCosmin, kox@bla.com, Giurgiu\n"
+	expected2 := "C:\nCosmin, kox@bla.com, Giurgiu\n\nA:\nAnita, anita@email.com, California\nAron, aron.bla@email.com, California\n"
 
 	// Assert
 	if string(data) != expected1 && string(data) != expected2 {

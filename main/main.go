@@ -71,9 +71,6 @@ func Transformation(ifilename string, ofilename string) {
 		output += letter + ":\n" + group + "\n"
 	}
 
-	// the output string will always finish with \n; we want to remove the last character
-	output = output[:len(output)-2]
-
 	foutput, ferror := os.Create(ofilename)
 
 	// check if there are errors when creating the output file
@@ -83,7 +80,11 @@ func Transformation(ifilename string, ofilename string) {
 
 	defer foutput.Close()
 
-	// !!! because maps are unordered, each run generates a random order for the groups !!!
+	// the output string will always finish with \n\n, because WriteString adds a \n
+	// we want to remove one of the \n
+	output = output[:len(output)-1]
+
+	// =!!!= because maps are unordered, each run generates a random order for the groups =!!!=
 	_, ferror2 := foutput.WriteString(output)
 
 	// check if there are errors when writing to output file
