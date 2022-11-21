@@ -7,7 +7,7 @@
 - Navigate to the _"main"_ folder
 - To run the app, open the command line in the folder and type **"go run main.go"**. The result will be exported in _"output.csv"_
 - To run the tests, type **"go test"**
-- If you wish an other input, change the contents inside _"input.csv"_. Be careful to respect the [format](#format) below or the app will crash
+- If you wish an other input, change the contents inside _"input.csv"_. Be careful to respect the [format](#format) below or the app will raise errors or even crash
 
 #### Format
 
