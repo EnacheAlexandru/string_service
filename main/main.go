@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"regexp"
-	"strings"
 )
 
 // complexity of O(n)
@@ -48,7 +47,8 @@ func Transformation(ifilename string, ofilename string) {
 		}
 
 		// The first letter of each line (header excluded) is an uppercase letter because the first field is supposed to be the name of a person
-		if line[0:1] != strings.ToUpper(line[0:1]) {
+		reg, _ := regexp.Compile("^[A-Z]$")
+		if !reg.MatchString(line[0:1]) {
 			panic("The first letter of each line (header excluded) should be an uppercase letter!")
 		}
 

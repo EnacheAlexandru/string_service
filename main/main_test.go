@@ -66,7 +66,7 @@ func TestTransofrmationInputFileIsEmpty(t *testing.T) {
 	data, _ := os.ReadFile(foutput)
 
 	// Assert
-	expected := "a"
+	expected := ""
 
 	if string(data) != expected {
 		t.Errorf("Expected an empty string")
