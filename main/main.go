@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -29,15 +31,25 @@ func Transformation(ifilename string, ofilename string) {
 	letterToGroup := map[string]string{}
 
 	scanner := bufio.NewScanner(finput)
+	isHeaderRead := false
 
+	//complexity of O(n) - we are only iterating once through the file
 	for scanner.Scan() {
 		var line string = scanner.Text()
 
-		// I assumed from the task description that the header always contains lowercase letters
-		// I also assumed that the first letter of each line (header excluded) is an uppercase letter
-		// because the first field is supposed to be the name of a person
-		if strings.ToLower(line) == line {
-			continue
+		// The header should have the first field "full_name". The fields are lowercase, separated with comma and space.
+		if !isHeaderRead {
+			reg, _ := regexp.Compile("^full_name(, [a-z_]+)*$")
+			if reg.MatchString(line) {
+				isHeaderRead = true
+				continue
+			}
+			panic("The header should have the first field \"full_name\". The fields are lowercase, separated with comma and space.")
+		}
+
+		// The first letter of each line (header excluded) is an uppercase letter because the first field is supposed to be the name of a person
+		if line[0:1] != strings.ToUpper(line[0:1]) {
+			panic("The first letter of each line (header excluded) should be an uppercase letter!")
 		}
 
 		_, lineExists := noDuplicates[line]
@@ -65,7 +77,7 @@ func Transformation(ifilename string, ofilename string) {
 
 	var output string = ""
 
-	// complexity of O(n) - we are only iterating once through the file and through the keys/values of the dictionary
+	// complexity of O(k) - we are only iterating once through the pair of keys/values (k < n)
 	// bulding the output string
 	for letter, group := range letterToGroup {
 		output += letter + ":\n" + group + "\n"
@@ -93,8 +105,15 @@ func Transformation(ifilename string, ofilename string) {
 	if ferror2 != nil {
 		panic("Error writing to output file!")
 	}
+
 }
 
 func main() {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("Panic occurred:", err)
+		}
+	}()
+
 	Transformation("input.csv", "output.csv")
 }

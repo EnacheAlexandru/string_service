@@ -7,9 +7,12 @@ import (
 
 /// AAA pattern (Arrange-Act-Assert)
 
-func TestInputFileDoesNotExists(t *testing.T) {
+func TestTransofrmationInputFileDoesNotExists(t *testing.T) {
 	defer func() {
-		recover()
+		if err := recover(); err != "Input file not found or failed to open!" {
+			// Assert
+			t.Errorf("Expected panic: Input file not found or failed to open!")
+		}
 	}()
 
 	// Arrange
@@ -18,12 +21,41 @@ func TestInputFileDoesNotExists(t *testing.T) {
 
 	// Act
 	Transformation(finput, foutput)
-
-	// Assert
-	t.Errorf("Input file exists. No panic")
 }
 
-func TestInputFileIsEmpty(t *testing.T) {
+func TestTransofrmationInputLowercaseName(t *testing.T) {
+	defer func() {
+		if err := recover(); err != "The first letter of each line (header excluded) should be an uppercase letter!" {
+			// Assert
+			t.Errorf("Expected panic: The first letter of each line (header excluded) should be an uppercase letter!")
+		}
+	}()
+
+	// Arrange
+	finput := "input_name_test.csv"
+	foutput := "output_test.csv"
+
+	// Act
+	Transformation(finput, foutput)
+}
+
+func TestTransofrmationInputWrongHeader(t *testing.T) {
+	defer func() {
+		if err := recover(); err != "The header should have the first field \"full_name\". The fields are lowercase, separated with comma and space." {
+			// Assert
+			t.Errorf("Expected panic: The header should have the first field \"full_name\". The fields are lowercase, separated with comma and space.")
+		}
+	}()
+
+	// Arrange
+	finput := "input_header_test.csv"
+	foutput := "output_test.csv"
+
+	// Act
+	Transformation(finput, foutput)
+}
+
+func TestTransofrmationInputFileIsEmpty(t *testing.T) {
 	// Arrange
 	finput := "input_empty_test.csv"
 	foutput := "output_test.csv"
